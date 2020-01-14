@@ -1,0 +1,18 @@
+<div class="container">
+  <img class="logo" src="./assets/logo.png" />
+  <mat-card class="loginBox">
+    <label *ngIf="subscribeTimer" class="timer" [ngClass]="{'warning':subscribeTimer < 10||subscribeTimer == 'Time Out'}">{{subscribeTimer}}</label>
+    <div class="question">
+      <label class="number">{{10-sessionQuestions.length}}</label>
+      <label class="questiontext">{{currentQuestion.question}}</label>
+    </div>
+    <mat-selection-list class="selection">
+      <mat-list-option *ngFor="let opt of currentQuestion.options" [value]="opt">
+        {{opt.option}}
+      </mat-list-option>
+    </mat-selection-list>
+
+    <button id="sign-in-button" mat-flat-button color="primary" class="buttonStyle"
+      (click)="submitActions()">{{checkButton}}</button>
+  </mat-card>
+</div>

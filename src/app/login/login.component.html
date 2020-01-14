@@ -1,0 +1,40 @@
+<div class="container">
+  <img class="logo" src="./assets/logo.png" />
+  <div>
+    <mat-card class="loginBox">
+        <h3 class="center">Exhibition Quiz Instructions</h3>
+        <ul class="instruction">
+          <li>The quiz can be only attended once</li>
+          <li>There will be 10 questions, you will get 30 seconds to answer each question</li>
+          <li>The results will be announced during the main event</li>
+        </ul>
+        <p class="center bold">Login with your mobile number</p>      
+      <form [formGroup]="LoginForm">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Name" [formControl]="nameFormControl" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="nameFormControl.hasError('required')">
+            Name is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Mobile Number" type="number" [formControl]="mobileFormControl"
+            [errorStateMatcher]="matcher" ng-model="phoneNumber.line" (ngModelChange)="numberChanged()">
+          <mat-error *ngIf="mobileFormControl.hasError('pattern')">
+            Please enter a valid mobile number!
+          </mat-error>
+          <mat-error *ngIf="mobileFormControl.hasError('required')">
+            Mobile is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" *ngIf="showOTP">
+          <input matInput placeholder="OTP" [formControl]="otpFormControl" [errorStateMatcher]="matcher" />
+          <mat-error *ngIf="otpFormControl.hasError('minlength') || otpFormControl.hasError('maxlength')">
+            Please enter the OTP received!
+          </mat-error>
+        </mat-form-field>
+        <button id="sign-in-button" mat-flat-button color="primary" class="example-full-width" (click)="processSubmit()"
+          [disabled]="!mobileFormControl.valid && isOtpReady()">{{validateText}}</button>
+      </form>
+    </mat-card>
+  </div>
+</div>

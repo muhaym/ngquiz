@@ -1,0 +1,68 @@
+<mat-tab-group (selectedTabChange)="tabChanged($event)">
+  <mat-tab label="Daily Leaderboard">
+    <ng-template matTabContent>
+      <div class="kunjappu">
+        <mat-form-field class="example-full-width">
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDate" [formControl]="ffromDate"
+            placeholder="Select the Date" (dateChange)="dateChanged($event)" [errorStateMatcher]="matcher">
+          <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+          <mat-datepicker #fromDate></mat-datepicker>
+          <mat-error *ngIf="ffromDate.hasError('required')">
+            Date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Overall Leaderboard">
+    <ng-template matTabContent>
+      <div class="kunjappu">
+        <mat-form-field class="example-full-width">
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="oFromDate" placeholder="From Date"
+            (dateChange)="fromDateChanged($event)" [errorStateMatcher]="matcher" [formControl]="aFromDate">
+          <mat-datepicker-toggle matSuffix [for]="oFromDate"></mat-datepicker-toggle>
+          <mat-datepicker #oFromDate></mat-datepicker>
+          <mat-error *ngIf="aFromDate.hasError('required')">
+            From Date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="oToDate" placeholder="To Date"
+            (dateChange)="toDateChanged($event)" [errorStateMatcher]="matcher" [formControl]="aToDate">
+          <mat-datepicker-toggle matSuffix [for]="oToDate"></mat-datepicker-toggle>
+          <mat-datepicker #oToDate></mat-datepicker>
+          <mat-error *ngIf="aToDate.hasError('required')">
+            To Date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+<table mat-table [dataSource]="scores" class="mat-elevation-z8">
+  <ng-container matColumnDef="index">
+    <th mat-header-cell *matHeaderCellDef> Rank </th>
+    <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="mobile">
+    <th mat-header-cell *matHeaderCellDef> Mobile </th>
+    <td mat-cell *matCellDef="let element"> {{hashedNumber(element.mobile)}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="result">
+    <th mat-header-cell *matHeaderCellDef> Score </th>
+    <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
